@@ -1,291 +1,286 @@
 <template>
-    <div class="container">
-        <Alert show-icon class="tips-box">
-            您还没有登录！登录后购物车的商品将保存到您账号中 &nbsp;&nbsp;前往
-            <router-link :to="{ name: 'login' }"> 登陆</router-link>
-        </Alert>
-        <div class="cart-list">
-            <cart-list :data="data" :columns="columns" v-on:selectChage="select"/>
+  <div class="container">
+
+    <div class="order-product">
+      <Table border size="large" :columns="columns" :data="data"></Table>
+    </div>
+    <div class="clear"></div>
+    <div class="cart-floatbar">
+      <div class="order-info">
+        <div class="line">
+          <div class="line-label">收货地址：</div>
+          <div class="line-value">400000 天津市市辖区和平区重庆市渝北区金贸时代 马云 18226988787</div>
         </div>
-        <div class="clear"></div>
-        <div class="cart-floatbar">
-            <div>
-                <div class="btn-area"><a @click="">去结算</a></div>
-                <div class="price-sum">
-                    <div class="total-amount">
-                        总价：<span>¥ {{ totalaMount }} </span>
-                    </div>
-                    <div class="discount-amount">
-                        优惠：-¥ 100.00
-                    </div>
-                </div>
-                <div class="amount-sum">已选择商品 <span>{{ productSum }}</span> 件商品</div>
-            </div>
+        <div class="line">
+          <div class="line-label"> 订单备注：</div>
+          <div class="line-value"> -</div>
+        </div>
+        <div class="line">
+          <div class="line-label"> 订单编号：</div>
+          <div class="line-value">20190826123411555436</div>
+        </div>
+      </div>
+      <div class="order-summary text-right ">
+        <div class="total-amount">
+          <div class="total-amount-label">总价：</div>
+          <span class="total-amount-value value">¥ {{ totalaMount }} </span>
+        </div>
+        <div class="discount-amount">
+          <div class="discount-amount-label">优惠：</div>
+          <span class="discount-amount-value value">-¥ 100.00</span>
         </div>
 
-        <div class="tabs">
-            <Tabs value="name1">
-                <TabPane label="猜你喜欢" name="name1">
-                    <ul class="">
-                        <goods/>
-                    </ul>
-                </TabPane>
-                <TabPane label="标签二" name="name2">
-                    <ul>
-                        <goods/>
-                    </ul>
-                </TabPane>
-            </Tabs>
+        <div class="discount-amount">
+          <div class="discount-amount-label">订单状态：</div>
+          <span class="discount-amount-value value">未支付</span>
         </div>
+
+        <div class="btn-area">
+          <div class="btu-pay">
+            <router-link :to="{ name: 'pay' }" class="btn-wx"> 微信支付</router-link>
+          </div>
+          <div class="btu-pay">
+            <router-link :to="{ name: 'pay' }" class="btn-alipay"> 支付宝支付</router-link>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="tabs">
+      <Tabs value="name1">
+        <TabPane label="猜你喜欢" name="name1">
+          <goods-recommend/>
+
+        </TabPane>
+        <TabPane label="热门推荐" name="name2">
+
+          <goods-recommend/>
+        </TabPane>
+      </Tabs>
+    </div>
+  </div>
 </template>
 
 <script>
-    import cartList from './cartList/list'
-    import goods from 'components/common/goods'
-    export default {
-        name: "cartAction",
-        data() {
-            return {
-                goodsCheckList: [],
-                totalaMount: 0,
-                productSum: 0,
-                columns: [
-                    {
-                        type: 'selection',
-                        width: 60,
-                        align: 'center'
-                    },
-                    {
-                        title: '商品',
-                        key: 'name',
-                        width: 450,
-                        render: (h, params) => {
-                            return h('div', {
-                                style: {
-                                    height: '100%',
-                                    padding: '14px 0px'
-                                }
-                            }, [
-                                h('div', {
-                                    style: {
-                                        display: 'inline-block',
-                                        float: 'left',
-                                        padding: '0 10 0 0px',
-                                        width: '80px',
-                                    }
-                                }, [
-                                    h('img', {
-                                        attrs: {
-                                            src: 'https://res0.vmallres.com/pimages//product/6901443320394/428_428_1563504284133mp.png',
-                                            // src: params.row.package.img,
-                                            style: "width: 100%"
-                                        }
-                                    })
-                                ]),
-                                h('div', {
-                                    style: {
-                                        width: '230px',
-                                        display: 'inline-block',
-                                        float: 'left',
-                                        fontSize: '12px',
-                                        color: '#333'
-                                    }
-                                }, [
-                                    'Apple iPhone XR (A2108) 64GB 蓝色 移动联通电信4G手机 双卡双待'
-                                ]),
-                                h('div', {
-                                    style: {
-                                        width: '80px',
-                                        fontSize: '12px',
-                                        marginLeft: '20px',
-                                        display: 'inline-block',
-                                        float: 'left',
-                                    }
-                                }, '4.7英寸-深邃蓝'),
+  import goodsRecommend from 'components/common/goodsRecommend'
 
-                                // 循环
-                                // ['span',
-                                //     params.row.product.map(v => { // 遍历后台params.row.product
-                                //         return h('div',
-                                //             {
-                                //                 domProps: {
-                                //                     innerHTML: v.name
-                                //                 }
-                                //             })
-                                //     })
-                                // ]
-
-                            ])
-                        },
-                    },
-                    {
-                        title: '单价',
-                        render: (h, params) => {
-                            return h('span',{//一个包含模板相关属性的数据对象
-                                domProps: {
-                                    innerHTML: params.row.package.price
-                                }
-                            })
-                        },
-                        align: 'center'
-                    },
-                    {
-                        title: '数量',
-                        key: 'count',
-                        align: 'center'
-                    },
-                    {
-                        title: '操作',
-                        width: 160,
-                        render: (h, params) => {
-                            return h('div', [
-                                h('a', {
-                                    props: {
-                                        type: 'error',
-                                        size: 'small'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.remove(params.index)
-                                        }
-                                    }
-                                }, '移除  '),
-                                h('a', {
-                                    props: {
-                                        type: 'info',
-                                        size: 'small'
-                                    },
-                                    style: {
-                                        marginLeft: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.collection(params.index)
-                                        }
-                                    }
-                                }, '  加入收藏'),
-                            ]);
-                        }
+  export default {
+    name: "cartAction",
+    data() {
+      return {
+        goodsCheckList: [],
+        productSum: 0,
+        columns: [
+          {
+            title: '商品信息',
+            key: 'name',
+            width: 450,
+            render: (h, params) => {
+              return h('div', {
+                style: {
+                  height: '100%',
+                  padding: '14px 0px'
+                }
+              }, [
+                h('div', {
+                  style: {
+                    display: 'inline-block',
+                    float: 'left',
+                    padding: '0 10 0 0px',
+                    width: '80px',
+                  }
+                }, [
+                  h('img', {
+                    attrs: {
+                      src: 'https://res0.vmallres.com/pimages//product/6901443320394/428_428_1563504284133mp.png',
+                      // src: params.row.package.img,
+                      style: "width: 100%"
                     }
-                ],
-                data: [
-                    {
-                        goods_id: 1566527548155,
-                        title: "苹果8/7手机壳iPhone7 Plus保护壳全包防摔磨砂硬外壳",
-                        count: 7,
-                        package: {
-                            img: "http://img10.360buyimg.com/cms/s80x80_jfs/t10780/74/3185981652/158732/dfb86c01/5ce4c39bN9cc91097.jpg",
-                            price: 28
-                        }
-                    },
-                    {
-                        goods_id: 1566527548155,
-                        title: "苹果8/7手机壳iPhone7 Plus保护壳全包防摔磨砂硬外壳",
-                        count: 2,
-                        package: {
-                            img: "http://img10.360buyimg.com/cms/s80x80_jfs/t10780/74/3185981652/158732/dfb86c01/5ce4c39bN9cc91097.jpg",
-                            price: 50
-                        }
-                    }
-                ]
-            }
-        },
-        computed: {},
-        methods: {
-            select(selection) {
-                this.goodsCheckList = selection
-                let price = 0
-                let sum = 0
-                selection.forEach(item => {
-                    price += item.package.price * item.count;
-                    sum += item.count;
-                });
-                this.totalaMount = price
-                this.productSum = sum
-            },
-            remove(id) {
-                console.log(id);
-                this.$Modal.info({
-                    title: id,
-                    content: `点击了移除按钮`
-                })
-            },
-            collection(id) {
-                this.$Modal.info({
-                    title: id,
-                    content: `加入收藏`
-                })
-            }
+                  })
+                ]),
+                h('div', {
+                  style: {
+                    width: '230px',
+                    display: 'inline-block',
+                    float: 'left',
+                    fontSize: '12px',
+                    color: '#333'
+                  }
+                }, [
+                  'Apple iPhone XR (A2108) 64GB 蓝色 移动联通电信4G手机 双卡双待'
+                ]),
+                h('div', {
+                  style: {
+                    width: '80px',
+                    fontSize: '12px',
+                    marginLeft: '20px',
+                    display: 'inline-block',
+                    float: 'left',
+                  }
+                }, '4.7英寸-深邃蓝'),
 
-        },
-        components: {
-            cartList,
-            goods
-        }
+                // 循环
+                // ['span',
+                //     params.row.product.map(v => { // 遍历后台params.row.product
+                //         return h('div',
+                //             {
+                //                 domProps: {
+                //                     innerHTML: v.name
+                //                 }
+                //             })
+                //     })
+                // ]
+
+              ])
+            },
+          },
+          {
+            title: '单价',
+            render: (h, params) => {
+              return h('span', {//一个包含模板相关属性的数据对象
+                domProps: {
+                  innerHTML: params.row.package.price
+                }
+              })
+            },
+            align: 'center'
+          },
+          {
+            title: '数量',
+            key: 'count',
+            align: 'center'
+          },
+          {
+            title: '小计',
+            width: 160,
+            align: 'center',
+            render: (h, params) => {
+              return h('span', {//一个包含模板相关属性的数据对象
+                domProps: {
+                  innerHTML: params.row.package.price * params.row.count
+                }
+              })
+            },
+          }
+        ],
+        data: [
+          {
+            goods_id: 1566527548155,
+            title: "苹果8/7手机壳iPhone7 Plus保护壳全包防摔磨砂硬外壳",
+            count: 7,
+            package: {
+              img: "http://img10.360buyimg.com/cms/s80x80_jfs/t10780/74/3185981652/158732/dfb86c01/5ce4c39bN9cc91097.jpg",
+              price: 28
+            }
+          },
+          {
+            goods_id: 1566527548155,
+            title: "苹果8/7手机壳iPhone7 Plus保护壳全包防摔磨砂硬外壳",
+            count: 2,
+            package: {
+              img: "http://img10.360buyimg.com/cms/s80x80_jfs/t10780/74/3185981652/158732/dfb86c01/5ce4c39bN9cc91097.jpg",
+              price: 50
+            }
+          }
+        ]
+      }
+    },
+    computed: {
+      totalaMount() {
+        let arr = this.data.map(item => {
+          return item.count * item.package.price
+        })
+        return eval(arr.join("+"));
+      }
+    },
+    methods: {},
+    components: {
+      goodsRecommend
     }
+  }
 </script>
 
 <style lang="scss" scoped>
-    .container {
-        width: 990px;
-        .tips-box {
-            margin-top: 40px;
-            margin-bottom: 20px;
-            a {
-                color: red;
-                &:hover {
-                    text-decoration: underline;
-                }
-            }
-        }
-        .cart-floatbar {
-            background-color: #FFFFFF;
-            color: #999999;
-            height: 60px;
-            font-size: 12px;
-            div {
-                display: inline-block;
-                float: right;
-            }
-            .price-sum {
-                width: 170px;
-                margin-right: 10px;
-                padding-top: 10px;
-                div {
-                    width: 100%;
-                    text-align: right;
-                }
-                .total-amount {
-                    span {
-                        font-size: 16px;
-                        color: #E2231A;
-                        font-weight: 700;
-                    }
-                }
-                .discount-amount {
-                    padding-top: 10px;
-                }
-            }
-            .amount-sum {
-                padding-top: 10px;
-                span {
-                    color: #E2231A;
-                    font-weight: 700;
-                }
-            }
-            .btn-area a {
-                display: block;
-                position: relative;
-                width: 94px;
-                line-height: 60px;
-                color: #fff;
-                text-align: center;
-                font-size: 18px;
-                font-family: "Microsoft YaHei";
-                background: #e54346;
-                overflow: hidden;
-            }
-        }
+  .container {
+    width: 990px;
+    .order-product {
+      margin-top: 40px;
     }
+    .cart-floatbar {
+      height: 150px;
+      line-height: 20px;
+      font-size: 12px;
+      display: flex;
+      padding: 10px 0px;
+      color: #999999;
+      background-color: #FFFFFF;
+      .order-info {
+        width: 50%;
+        height: 100%;
+        color: #212529;
+        flex: 1;
+        border-right: 1px solid #ddd;
+        .line {
+          display: flex;
+          flex-direction: row;
+          .line-label {
+            width: 80px;
+            text-align: right;
+          }
+          .line-value {
+            flex-shrink: 100;
+          }
+        ;
+        }
+      }
+      .order-summary {
+        width: 50%;
+        color: #212529;
+        flex: 1;
+        font-family: Verdana, Tahoma, Helvetica, Arial;
+        .value {
+          display: inline-block;
+          width: 150px;
+          padding-right: 20px;
+        }
+        .total-amount, .discount-amount {
+
+          div {
+            display: inline-block;
+          }
+          .total-amount-value {
+            font-size: 16px;
+            color: #E2231A;
+            font-weight: 700;
+          }
+        }
+        .btn-area {
+          margin-top: 20px;
+          padding-right: 20px;
+          display: inline-block;
+          .btu-pay {
+            float: right;
+            text-align: center;
+            a {
+              width: 80px;
+              padding: 6px;
+              display: inline-block;
+              color: #fff;
+              border-radius: 3px;
+            }
+            .btn-wx {
+              background-color: #42c02e;
+              border-color: #42c02e;
+            }
+            .btn-alipay {
+              margin-right: 20px;
+              background-color: #3490dc;
+              border-color: #3490dc;
+            }
+          }
+
+        }
+      }
+    }
+  }
 </style>

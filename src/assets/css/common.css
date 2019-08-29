@@ -1,140 +1,174 @@
 @import "normalize.css";
 
-html body{
-    min-width: 1200px;
-    font-size: 14px;
-    color: #3C3C3C;
-    background-color: #f4f4f4
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html body {
+  min-width: 1200px;
+  font-size: 14px;
+  color: #3C3C3C;
+  background-color: #f4f4f4
 }
 
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
-    margin: 0;
-    padding: 0
+  margin: 0;
+  padding: 0
 }
 
 body, button, input, select, textarea {
-    font: 12px arial
+  font: 12px arial
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-size: 100%
+  font-size: 100%
 }
 
 em {
-    font-style: normal
+  font-style: normal
 }
 
 small {
-    font-size: 12px
+  font-size: 12px
 }
 
 ul, ol {
-    list-style: none
+  list-style: none
 }
 
 a {
-    text-decoration: none;
-    color: #666666;
+  text-decoration: none;
+  color: #666666;
 }
 
 a:hover {
-    text-decoration: none;
-    color: red;
+  text-decoration: none;
+  color: red;
 }
 
 legend {
-    color: #000
+  color: #000
 }
 
 fieldset, img {
-    border: 0
+  border: 0
 }
 
 button, input, select, textarea {
-    font-size: 100%
+  font-size: 100%
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0
+  border-collapse: collapse;
+  border-spacing: 0
 }
 
 img {
-    -ms-interpolation-mode: bicubic
+  -ms-interpolation-mode: bicubic;
+  margin: 0;
+  padding: 0
 }
 
 textarea {
-    resize: vertical
+  resize: vertical
 }
 
 .container {
-    width: 1190px;
-    margin-right: auto;
-    margin-left: auto;
+  width: 1190px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .left {
-    float: left
+  float: left
 }
 
 .right {
-    float: right
+  float: right
 }
 
 .overflow {
-    overflow: hidden
+  overflow: hidden
 }
 
 .hide {
-    display: none
+  display: none
 }
 
 .block {
-    display: block
+  display: block
 }
 
 .inline {
-    display: inline
+  display: inline
 }
 
 .error {
-    color: #F00;
-    font-size: 12px
+  color: #F00;
+  font-size: 12px
 }
 
 label, button {
-    cursor: pointer
+  cursor: pointer
 }
 
 .clearfix:after {
-    content: '\20';
-    display: block;
-    height: 0;
-    clear: both
+  content: '\20';
+  display: block;
+  height: 0;
+  clear: both
 }
 
 .clearfix {
-    zoom: 1
+  zoom: 1
 }
 
 .clear {
-    clear: both;
-    height: 0;
-    line-height: 0;
-    font-size: 0;
-    visibility: hidden;
-    overflow: hidden
+  clear: both;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  visibility: hidden;
+  overflow: hidden
 }
 
 .wordwrap {
-    word-break: break-all;
-    word-wrap: break-word
+  word-break: break-all;
+  word-wrap: break-word
 }
 
-.h-100{
-    height: 100%;
+.h-100 {
+  height: 100%;
 }
 
-.m-auto{
-    margin: 0 auto;
+.m-auto {
+  margin: 0 auto;
 }
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+/* 修改 iview checkbox 选中的默认颜色*/
+.ivu-checkbox-checked .ivu-checkbox-inner {
+  border-color: #e4393c !important;
+  background-color: #e4393c !important;
+}
+
+/* 修改分页样式 */
+
+/*.ivu-page-item-active {*/
+/*border-color: #e4393c !important;*/
+/*}*/
+/*.ivu-page-item-active a {*/
+/*!*color: #e4393c !important;*!*/
+/*}*/
+/*.ivu-page-item:hover{*/
+/*border-color: #e4393c !important;*/
+/*}*/
+/*.ivu-page-prev:hover, .ivu-page-next:hover */
